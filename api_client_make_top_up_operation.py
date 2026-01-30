@@ -1,5 +1,4 @@
 from clients.http.gateway.accounts.client import build_accounts_gateway_http_client
-from clients.http.gateway.operations.schema import Status
 from clients.http.gateway.users.client import build_users_gateway_http_client
 from clients.http.gateway.operations.client import build_operations_gateway_http_client
 
@@ -19,8 +18,8 @@ card_id = open_debit_card_account_response.account.cards[0].id
 account_id = open_debit_card_account_response.account.id
 print('Open debit card account response:', open_debit_card_account_response)
 
-make_top_up_operation_response = operations_gateway_client.make_top_up_operation(status=Status.COMPLETED,
-                                                                                 amount=1500,
-                                                                                 card_id=card_id,
-                                                                                 account_id=account_id)
+make_top_up_operation_response = operations_gateway_client.make_top_up_operation(
+    card_id=card_id,
+    account_id=account_id
+)
 print('Make top up operation response:', make_top_up_operation_response)

@@ -2,8 +2,10 @@ from enum import StrEnum
 
 from pydantic import BaseModel, Field, ConfigDict
 
+from tools.fakers import fake
 
-class Type(StrEnum):
+
+class OperationType(StrEnum):
     FEE = "FEE"
     TOP_UP = "TOP_UP"
     PURCHASE = "PURCHASE"
@@ -13,7 +15,7 @@ class Type(StrEnum):
     CASH_WITHDRAWAL = "CASH_WITHDRAWAL"
 
 
-class Status(StrEnum):
+class OperationStatus(StrEnum):
     FAILED = "FAILED"
     COMPLETED = "COMPLETED"
     IN_PROGRESS = "IN_PROGRESS"
@@ -25,8 +27,8 @@ class OperationSchema(BaseModel):
     Описание структуры операции
     """
     id: str
-    type: Type
-    status: Status
+    type: OperationType
+    status: OperationStatus
     amount: float
     card_id: str = Field(alias="cardId")
     category: str
@@ -57,8 +59,8 @@ class MakeOperationRequestSchema(BaseModel):
     """
     model_config = ConfigDict(populate_by_name=True)
 
-    status: Status
-    amount: int
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = Field(default_factory=fake.amount)
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -76,7 +78,7 @@ class MakePurchaseOperationRequestSchema(MakeOperationRequestSchema):
     """
     Структура данных для создания операции покупки.
     """
-    category: str
+    category: str = Field(default_factory=fake.category)
 
 
 class GetOperationsSummaryQuerySchema(BaseModel):
