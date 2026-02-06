@@ -2,7 +2,6 @@ from grpc import Channel
 
 from clients.grpc.client import GRPCClient
 from clients.grpc.gateway.client import build_gateway_grpc_client
-from clients.http.gateway.operations.schema import OperationStatus
 from contracts.services.gateway.operations.operations_gateway_service_pb2_grpc import OperationsGatewayServiceStub
 from contracts.services.gateway.operations.rpc_get_operation_pb2 import (
     GetOperationResponse,
@@ -48,6 +47,7 @@ from contracts.services.gateway.operations.rpc_make_transfer_operation_pb2 impor
     MakeTransferOperationRequest,
     MakeTransferOperationResponse
 )
+from contracts.services.operations.operation_pb2 import OperationStatus
 
 from tools.fakers import fake
 
